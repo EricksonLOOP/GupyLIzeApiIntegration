@@ -7,4 +7,6 @@ import org.springframework.stereotype.Service;
 
 public interface GlaiServices {
     ResponseEntity<?> criarUsuario(JSONObject jsondata);
+
+    ResponseEntity<?> tests();
 }

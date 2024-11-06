@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
 public class ContratoController {
     @Autowired
     private final GlaiServices glaiServices;
@@ -15,12 +14,15 @@ public class ContratoController {
     public ContratoController(GlaiServices glaiServices) {
         this.glaiServices = glaiServices;
     }
-
+    @GetMapping("/test")
+    public ResponseEntity<?> Tests(){
+        return glaiServices.tests();
+    }
     @GetMapping("/")
     public String HelloWorld(){
         return "Welcome To GLAI (Gupy Lize API Integration).";
     }
-    @PostMapping("/lize/create")
+    @PostMapping("/test/candidate")
     public ResponseEntity<?> CriarUsuarioNoLize(@RequestBody JSONObject jsondata){
         return glaiServices.criarUsuario(jsondata);
     }
