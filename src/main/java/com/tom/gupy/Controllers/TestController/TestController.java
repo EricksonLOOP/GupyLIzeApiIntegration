@@ -2,30 +2,33 @@ package com.tom.gupy.Controllers.TestController;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
+import com.tom.gupy.Models.TestsModel.TestItems;
+import com.tom.gupy.Services.TestServices.TestServices;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/test")
 public class TestController {
+    @Autowired
+    private final TestServices testServices;
+
+    public TestController(TestServices testServices) {
+        this.testServices = testServices;
+    }
+
     @GetMapping
-    public ResponseEntity<?> GetTests(){
+    public ResponseEntity<TestItems> GetTests(@RequestParam(required = false, defaultValue = "0") int offset,
+                                              @RequestParam(required = false, defaultValue = "0") int limit){
         try {
-            OkHttpClient client = new OkHttpClient();
-            Request req = new Request.Builder()
-                    .url("https://app.lizeedu.com.br/api/v2/exams/")
-                    .get()
-                    .addHeader("accept", "application/json")
-                    .addHeader("Authorization", "Token 9cd3fa87001df9f4ac289af7eef8d51fd1c15f60")
-                    .build();
-            Response response = client.newCall(req).execute();
-            JSONObject data = new JSONObject(response.body().string());
-            return ResponseEntity.ok().body("Data: "+data.get("results"));
+
+            return ResponseEntity.ok().body(testServices.RecuperarTestes(limit, offset));
 
         } catch (Exception e) {
             throw new RuntimeException(e);

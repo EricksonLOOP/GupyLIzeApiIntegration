@@ -1,13 +1,11 @@
-package com.tom.gupy.Controllers.CandidadteController;
+package com.tom.gupy.Controllers.CandidateController;
 
-import com.tom.gupy.Models.CandidateModel.BodyCandididadteRegistration;
+import com.tom.gupy.Models.CandidateModel.BodyCandidateRegistration;
 import com.tom.gupy.Services.UserServices.UserServices;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/test/candidate")
@@ -18,9 +16,8 @@ public class CandidateController {
     public CandidateController(UserServices userServices) {
         this.userServices = userServices;
     }
-
-    @GetMapping
-    public ResponseEntity<?> testCandidate(@RequestBody BodyCandididadteRegistration body){
+    @PostMapping
+    public ResponseEntity<?> testCandidate(@Valid  @RequestBody BodyCandidateRegistration body){
         return userServices.encontrarOuCriarUsuario(body);
 
     }

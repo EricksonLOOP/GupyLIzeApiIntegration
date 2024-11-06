@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class BodyCandididadteRegistration {
+public class BodyCandidateRegistration {
     private String name;
     private String email;
     private Integer document_id;
@@ -20,7 +20,7 @@ public class BodyCandididadteRegistration {
     private String candidate_type;
     private String previous_result;
     private String result_webhook_url;
-    public BodyCandididadteRegistration() {
+    public BodyCandidateRegistration() {
 
     }
 

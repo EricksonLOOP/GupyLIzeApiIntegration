@@ -1,14 +1,14 @@
 package com.tom.gupy.Services.GlaiServices;
 
 import com.squareup.okhttp.*;
-import com.tom.gupy.Models.CandidateModel.BodyCandididadteRegistration;
+import com.tom.gupy.Models.CandidateModel.BodyCandidateRegistration;
 import com.tom.gupy.Models.SchoolModel.SchoolModel;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.yaml.snakeyaml.util.EnumUtils;
 
-import java.net.URI;
 import java.util.*;
 
 @Service
@@ -17,14 +17,14 @@ public class GlaiServicesImpl implements GlaiServices {
 
 
 @Autowired
-   public JSONObject CriarParametros(BodyCandididadteRegistration bodyCandididadteRegistration) {
+   public JSONObject CriarParametros(BodyCandidateRegistration bodyCandidateRegistration) {
 
         JSONObject params = new JSONObject();
-        params.put("name", bodyCandididadteRegistration.getName());
-        params.put("responsible_email", bodyCandididadteRegistration.getEmail());
-        params.put("email", bodyCandididadteRegistration.getEmail());
-        params.put("username", bodyCandididadteRegistration.getEmail());
-        params.put("password", bodyCandididadteRegistration.getBirthdate());
+        params.put("name", bodyCandidateRegistration.getName());
+        params.put("responsible_email", bodyCandidateRegistration.getEmail());
+        params.put("email", bodyCandidateRegistration.getEmail());
+        params.put("username", bodyCandidateRegistration.getEmail());
+        params.put("password", bodyCandidateRegistration.getBirthdate());
        return params;
     }
 
@@ -46,7 +46,7 @@ public class GlaiServicesImpl implements GlaiServices {
         if (response.isSuccessful()){
             return responseData.get("access_token").toString();
         }else{
-            throw new RuntimeException("Erro ao gerar Access_Token no Lize");
+            throw new RuntimeException("Erro ao gerar Access_Token no Lize.");
         }
 
 
@@ -84,6 +84,7 @@ public class GlaiServicesImpl implements GlaiServices {
             throw new RuntimeException(e);
         }
     }
+
 
     private SchoolModel RecuperarEscola(String idSala) {
     try{
