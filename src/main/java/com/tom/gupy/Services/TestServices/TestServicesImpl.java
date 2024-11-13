@@ -53,7 +53,7 @@ public class TestServicesImpl implements TestServices {
                     .url("http://app.lizeedu.com.br/api/v2/application-students-results/")
                     .get()
                     .addHeader("Content-Type","application/json")
-                    .addHeader("Authorization", "Token "+System.getenv("LIZE_API_KEY"))
+                    .addHeader("Authorization", "Token "+System.getenv("LIZEKey"))
                     .build();
             Response response = client.newCall(request).execute();
             JSONObject jsonData = new JSONObject(response.body().string());
