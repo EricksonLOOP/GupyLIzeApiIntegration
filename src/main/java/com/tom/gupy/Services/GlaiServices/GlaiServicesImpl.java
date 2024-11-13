@@ -112,8 +112,8 @@ public class GlaiServicesImpl implements GlaiServices {
 
     //Lista de Salas de aulas com seus respectivos testes
         Map<String, String> classes = Map.of(
-                "exemploIdTest1", "Sala 1",
-                "exemploIdTest2", "Sala 2"
+                "c3e95ab2-e44c-4f48-9b21-3bb569916beb", "1423aacc-1871-4dc7-a15f-acf92f727806"
+
         );
         List<String> classe = new ArrayList<>();
 
