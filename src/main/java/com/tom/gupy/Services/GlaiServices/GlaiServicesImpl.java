@@ -16,9 +16,8 @@ public class GlaiServicesImpl implements GlaiServices {
     OkHttpClient client = new OkHttpClient();
 
 
-@Autowired
+    @Override
    public JSONObject CriarParametros(BodyCandidateRegistration bodyCandidateRegistration) {
-
         JSONObject params = new JSONObject();
         params.put("name", bodyCandidateRegistration.getName());
         params.put("responsible_email", bodyCandidateRegistration.getEmail());

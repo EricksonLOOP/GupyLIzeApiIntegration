@@ -3,6 +3,7 @@ package com.tom.gupy.Models.CandidateModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.context.annotation.Bean;
 
 @Data
 @AllArgsConstructor
