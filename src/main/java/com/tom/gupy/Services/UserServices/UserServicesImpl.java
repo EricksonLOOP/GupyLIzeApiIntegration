@@ -41,11 +41,11 @@ public class UserServicesImpl implements UserServices {
                     return ResponseEntity.status(HttpStatus.CREATED).body(response);
                 }
             }else{
-                throw new RuntimeException();
+                throw new RuntimeException("Erro ao criar usuário no LizeEdu");
             }
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Ocorreu erro interno ao tentar criar usuário e retornar parametros");
         }
         return null;
     }
