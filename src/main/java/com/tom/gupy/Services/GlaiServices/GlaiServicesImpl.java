@@ -24,7 +24,13 @@ public class GlaiServicesImpl implements GlaiServices {
         params.put("email", bodyCandidateRegistration.getEmail());
         params.put("username", bodyCandidateRegistration.getEmail());
         params.put("password", bodyCandidateRegistration.getBirthdate());
+        params.put("enrollment_number", enrolamentNumberGenerator());
        return params;
+    }
+    public String enrolamentNumberGenerator(){
+        Random random = new Random();
+        long randomNumber = 100000000000L + (long)(random.nextDouble() + 90000000000L);
+        return String.valueOf(randomNumber);
     }
 
     @Override
@@ -37,7 +43,7 @@ public class GlaiServicesImpl implements GlaiServices {
                 .url("https://app.lizeedu.com.br//api/v2/sso/generate_accesss_token/")
                 .post(requestBody)
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Authentication", "Token "+System.getenv("LIZEKey"))
+                .addHeader("Authentication", "Token 9cd3fa87001df9f4ac289af7eef8d51fd1c15f60")
                 .build();
         Response response = client.newCall(request).execute();
         JSONObject responseData = new JSONObject(response.body().string());
@@ -57,72 +63,77 @@ public class GlaiServicesImpl implements GlaiServices {
 
     @Override
     public boolean AdicionarUsuarioNaClasse(String testId, String userId, JSONObject params) {
-        try{
-            List<String> idSala = RelacionarTestIdComClasse(testId);
-            //SchoolModel classe = RecuperarEscola(idSala);
+        try {
+            // Relaciona testId com a classe
+            String idSala = RelacionarTestIdComClasse(testId).get(0);
 
-            //Removendo parametros desnecessários
+            // Remove parâmetros desnecessários
             params.remove("username");
             params.remove("password");
-            //Add novos parametros necessários
-            params.put("client", idSala);
-            params.put("shchool_classes", idSala);
 
+            // Adiciona novos parâmetros necessários
+            params.put("client", idSala);
+            params.put("shchool_classes", idSala);  // Verifique a ortografia: "shchool_classes" parece incorreta
+
+            // Configura a requisição HTTP
             RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), params.toString());
             Request request = new Request.Builder()
-                    .url("https://app.lizeedu.com.br/api/v2/students/"+userId+"/set_classes/")
+                    .url("https://app.lizeedu.com.br/api/v2/students/" + userId + "/set_classes/")
                     .post(requestBody)
                     .addHeader("Content-Type", "application/json")
-                    .addHeader("Authentication", "Token "+System.getenv("LIZEKey"))
+                    .addHeader("Authorization", "Token 9cd3fa87001df9f4ac289af7eef8d51fd1c15f60")
                     .build();
 
+            // Executa a requisição
             Response response = client.newCall(request).execute();
 
+            // Verifica se a requisição foi bem-sucedida
             return response.isSuccessful();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            // Exibe erro detalhado
+            throw new RuntimeException("Erro ao adicionar usuário à classe: " + e.getMessage(), e);
+        }
+    }
+
+
+    private List<String> RelacionarTestIdComClasse(String testId) {
+        // Lista de Salas de aulas com seus respectivos testes
+        Map<String, String> classes = Map.of(
+                "c3e95ab2-e44c-4f48-9b21-3bb569916beb", "1423aacc-1871-4dc7-a15f-acf92f727806"
+        );
+
+        String classId = classes.get(testId);
+
+        if (classId != null && !classId.isEmpty()) {
+            List<String> classe = new ArrayList<>();
+            classe.add(classId);
+            return classe;
+        } else {
+            throw new RuntimeException("Classe de aula não encontrada para o testId: " + testId);
         }
     }
 
 
     private SchoolModel RecuperarEscola(String idSala) {
-    try{
-        Request req = new Request.Builder()
-                .url("https://app.lizeedu.com.br/api/v2/classes/"+idSala+"/")
-                .get()
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Authorization", "Token "+System.getenv("LIZEKey"))
-                .build();
-        Response response = client.newCall(req).execute();
-        JSONObject data = new JSONObject(response.body().string());
-        SchoolModel classe = new SchoolModel(
-                data.get("id").toString(),
-                data.getString("name"),
-                data.get("coodination").toString(),
-                data.get("school_year").toString()
-                );
+        try{
+            Request req = new Request.Builder()
+                    .url("https://app.lizeedu.com.br/api/v2/classes/"+idSala+"/")
+                    .get()
+                    .addHeader("Content-Type", "application/json")
+                    .addHeader("Authorization", "Token 9cd3fa87001df9f4ac289af7eef8d51fd1c15f60")
+                    .build();
+            Response response = client.newCall(req).execute();
+            JSONObject data = new JSONObject(response.body().string());
+            SchoolModel classe = new SchoolModel(
+                    data.get("id").toString(),
+                    data.getString("name"),
+                    data.get("coodination").toString(),
+                    data.get("school_year").toString()
+            );
 
-        return classe;
-    } catch (Exception e) {
-        throw new RuntimeException(e);
-    }
-    }
-
-    private List<String> RelacionarTestIdComClasse(String testId) {
-
-    //Lista de Salas de aulas com seus respectivos testes
-        Map<String, String> classes = Map.of(
-                "c3e95ab2-e44c-4f48-9b21-3bb569916beb", "1423aacc-1871-4dc7-a15f-acf92f727806"
-
-        );
-        List<String> classe = new ArrayList<>();
-
-        if (!classes.get(testId).isEmpty()){
-            classe.add(classes.get(testId));
             return classe;
-        }else{
-            throw new RuntimeException("Classe de aula não encontrada.");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-
     }
 }
