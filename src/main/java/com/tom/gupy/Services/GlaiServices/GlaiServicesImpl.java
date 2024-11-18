@@ -29,7 +29,7 @@ public class GlaiServicesImpl implements GlaiServices {
     }
     public String enrolamentNumberGenerator(){
         Random random = new Random();
-        long randomNumber = 100000000000L + (long)(random.nextDouble() + 90000000000L);
+        long randomNumber = random.nextLong() + 100000000000L;
         return String.valueOf(randomNumber);
     }
 
@@ -40,10 +40,10 @@ public class GlaiServicesImpl implements GlaiServices {
         params.put("email", email);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), params.toString());
         Request request = new Request.Builder()
-                .url("https://app.lizeedu.com.br//api/v2/sso/generate_accesss_token/")
+                .url("https://app.lizeedu.com.br/api/v2/sso/generate_accesss_token/")
                 .post(requestBody)
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Authentication", "Token 9cd3fa87001df9f4ac289af7eef8d51fd1c15f60")
+                .addHeader("Authorization", "Token 9cd3fa87001df9f4ac289af7eef8d51fd1c15f60")
                 .build();
         Response response = client.newCall(request).execute();
         JSONObject responseData = new JSONObject(response.body().string());
@@ -66,16 +66,17 @@ public class GlaiServicesImpl implements GlaiServices {
         try {
             // Relaciona testId com a classe
             String idSala = RelacionarTestIdComClasse(testId).get(0);
-
+            List<String> salas = new ArrayList<>();
+            salas.add(idSala);
             // Remove parâmetros desnecessários
             params.remove("username");
             params.remove("password");
-
+            params.remove("classes");
+            params.remove("is_active");
+            params.remove("id");
             // Adiciona novos parâmetros necessários
             params.put("client", idSala);
-            params.put("shchool_classes", idSala);  // Verifique a ortografia: "shchool_classes" parece incorreta
-
-            // Configura a requisição HTTP
+            params.put("school_classes", salas);
             RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), params.toString());
             Request request = new Request.Builder()
                     .url("https://app.lizeedu.com.br/api/v2/students/" + userId + "/set_classes/")
@@ -86,8 +87,6 @@ public class GlaiServicesImpl implements GlaiServices {
 
             // Executa a requisição
             Response response = client.newCall(request).execute();
-
-            // Verifica se a requisição foi bem-sucedida
             return response.isSuccessful();
         } catch (Exception e) {
             // Exibe erro detalhado
