@@ -43,7 +43,7 @@ public class GlaiServicesImpl implements GlaiServices {
                 .url("https://app.lizeedu.com.br/api/v2/sso/generate_accesss_token/")
                 .post(requestBody)
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Authorization", "Token 9cd3fa87001df9f4ac289af7eef8d51fd1c15f60")
+                .addHeader("Authorization", "Token SEU TOKEN LIZE AQUI")
                 .build();
         Response response = client.newCall(request).execute();
         JSONObject responseData = new JSONObject(response.body().string());
@@ -82,7 +82,7 @@ public class GlaiServicesImpl implements GlaiServices {
                     .url("https://app.lizeedu.com.br/api/v2/students/" + userId + "/set_classes/")
                     .post(requestBody)
                     .addHeader("Content-Type", "application/json")
-                    .addHeader("Authorization", "Token 9cd3fa87001df9f4ac289af7eef8d51fd1c15f60")
+                    .addHeader("Authorization", "Token SEU TOKEN LIZE AQUI")
                     .build();
 
             // Executa a requisição
@@ -119,7 +119,7 @@ public class GlaiServicesImpl implements GlaiServices {
                     .url("https://app.lizeedu.com.br/api/v2/classes/"+idSala+"/")
                     .get()
                     .addHeader("Content-Type", "application/json")
-                    .addHeader("Authorization", "Token 9cd3fa87001df9f4ac289af7eef8d51fd1c15f60")
+                    .addHeader("Authorization", "Token SEU TOKEN LIZE AQUI")
                     .build();
             Response response = client.newCall(req).execute();
             JSONObject data = new JSONObject(response.body().string());

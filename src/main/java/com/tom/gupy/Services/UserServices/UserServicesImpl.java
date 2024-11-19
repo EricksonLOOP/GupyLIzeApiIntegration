@@ -32,7 +32,7 @@ public class UserServicesImpl implements UserServices {
                     .url("https://app.lizeedu.com.br/api/v2/students/")
                     .post(requestBody)
                     .addHeader("Content-Type", "application/json")
-                    .addHeader("Authorization", "Token 9cd3fa87001df9f4ac289af7eef8d51fd1c15f60")
+                    .addHeader("Authorization", "Token SEU TOKEN LIZE AQUI")
                     .build();
 
             Response res = client.newCall(request).execute();
