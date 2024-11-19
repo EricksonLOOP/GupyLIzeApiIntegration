@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
 
     <h1>GupyLizeIntegration</h1>
     <p>O projeto GupyLizeIntegration é uma integração entre as plataformas Gupy e LizeEdu. O objetivo deste projeto é fornecer serviços que permitem o gerenciamento de testes, resultados de exames e candidatos. Ele utiliza a API da plataforma LizeEdu para recuperar e registrar informações sobre candidatos e seus resultados de exames, além de permitir a criação de usuários na plataforma.</p>
@@ -96,6 +89,3 @@
 
     <h2>Licença</h2>
     <p>Este projeto está licenciado sob a MIT License - veja o arquivo <code>LICENSE</code> para mais detalhes.</p>
-
-</body>
-</html>
