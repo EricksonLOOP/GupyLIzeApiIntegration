@@ -44,4 +44,7 @@ O serviço `UserServices` gerencia a criação e o registro de candidatos na pla
 1. Clone o repositório:
    ```bash
    git clone https://github.com/seu-usuario/GupyLizeIntegration.git
-```cd GupyLizeIntegration
+   ```cd GupyLizeIntegration
+   ```mvn install
+   ``mvn spring-boot:run
+
