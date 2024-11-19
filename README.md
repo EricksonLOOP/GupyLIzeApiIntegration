@@ -1,50 +1,109 @@
-# GupyLizeIntegration
+<h1>GupyLizeIntegration</h1>
 
-O projeto **GupyLizeIntegration** é uma integração entre as plataformas Gupy e LizeEdu. O objetivo deste projeto é fornecer serviços que permitem o gerenciamento de testes, resultados de exames e candidatos. Ele utiliza a API da plataforma LizeEdu para recuperar e registrar informações sobre candidatos e seus resultados de exames, além de permitir a criação de usuários na plataforma.
+<p>O projeto <strong>GupyLizeIntegration</strong> é uma integração entre as plataformas Gupy e LizeEdu. O objetivo deste projeto é fornecer serviços que permitem o gerenciamento de testes, resultados de exames e candidatos. Ele utiliza a API da plataforma LizeEdu para recuperar e registrar informações sobre candidatos e seus resultados de exames, além de permitir a criação de usuários na plataforma.</p>
 
-## Funcionalidades
+<h2>Funcionalidades</h2>
 
-- **Recuperação de Testes:** Obtém a lista de testes disponíveis na plataforma LizeEdu, com a capacidade de filtrar por nome.
-- **Registro de Candidatos:** Cria ou encontra um usuário na plataforma LizeEdu e associa a um teste específico.
-- **Recuperação de Resultados de Testes:** Obtém os resultados dos testes de um candidato baseado no seu ID.
+<ul>
+    <li><strong>Recuperação de Testes:</strong> Obtém a lista de testes disponíveis na plataforma LizeEdu, com a capacidade de filtrar por nome.</li>
+    <li><strong>Registro de Candidatos:</strong> Cria ou encontra um usuário na plataforma LizeEdu e associa a um teste específico.</li>
+    <li><strong>Recuperação de Resultados de Testes:</strong> Obtém os resultados dos testes de um candidato baseado no seu ID.</li>
+</ul>
 
-## Estrutura do Projeto
+<h2>Estrutura do Projeto</h2>
 
-O projeto é composto por dois serviços principais: `TestServices` e `UserServices`.
+<p>O projeto é composto por dois serviços principais: <code>TestServices</code> e <code>UserServices</code>.</p>
 
-### TestServices
+<h3>TestServices</h3>
+<p>O serviço <code>TestServices</code> é responsável por interagir com a API da LizeEdu para recuperar testes e resultados de exames.</p>
 
-O serviço `TestServices` é responsável por interagir com a API da LizeEdu para recuperar testes e resultados de exames.
+<ul>
+    <li><strong>RecuperarTestes(Integer limit, Integer offset):</strong> Recupera uma lista de testes filtrados por nome.</li>
+    <li><strong>PegarResultadosDoUsuarioID(String idResult):</strong> Obtém os resultados de um candidato específico baseado no seu ID.</li>
+</ul>
 
-- `RecuperarTestes(Integer limit, Integer offset)`: Recupera uma lista de testes filtrados por nome.
-- `PegarResultadosDoUsuarioID(String idResult)`: Obtém os resultados de um candidato específico baseado no seu ID.
+<h3>UserServices</h3>
+<p>O serviço <code>UserServices</code> gerencia a criação e o registro de candidatos na plataforma LizeEdu.</p>
 
-### UserServices
+<ul>
+    <li><strong>encontrarOuCriarUsuario(BodyCandidateRegistration bodyCandidateRegistration):</strong> Cria ou encontra um usuário e o associa a um teste específico.</li>
+</ul>
 
-O serviço `UserServices` gerencia a criação e o registro de candidatos na plataforma LizeEdu.
+<h2>Dependências</h2>
 
-- `encontrarOuCriarUsuario(BodyCandidateRegistration bodyCandidateRegistration)`: Cria ou encontra um usuário e o associa a um teste específico.
+<ul>
+    <li><strong>Spring Boot:</strong> Framework usado para construir a aplicação.</li>
+    <li><strong>OkHttp:</strong> Biblioteca utilizada para fazer requisições HTTP para a API LizeEdu.</li>
+    <li><strong>JSON:</strong> Biblioteca para manipulação de dados JSON.</li>
+</ul>
 
-## Dependências
+<h2>Como Rodar o Projeto</h2>
 
-- **Spring Boot:** Framework usado para construir a aplicação.
-- **OkHttp:** Biblioteca utilizada para fazer requisições HTTP para a API LizeEdu.
-- **JSON:** Biblioteca para manipulação de dados JSON.
+<h3>Pré-requisitos</h3>
 
-## Como Rodar o Projeto
+<ul>
+    <li>JDK 11 ou superior</li>
+    <li>Apache Maven ou Gradle</li>
+    <li>Token de acesso válido para a API LizeEdu</li>
+</ul>
 
-### Pré-requisitos
+<h3>Instruções</h3>
 
-- JDK 11 ou superior
-- Apache Maven ou Gradle
-- Token de acesso válido para a API LizeEdu
+<ol>
+    <li>Clone o repositório:
+        <pre><code>git clone https://github.com/seu-usuario/GupyLizeIntegration.git</code></pre>
+    </li>
+    <li>Entre no diretório do projeto:
+        <pre><code>cd GupyLizeIntegration</code></pre>
+    </li>
+    <li>Instale as dependências:
+        <pre><code>mvn install</code></pre>
+    </li>
+    <li>Edite o código para adicionar seu token de API LizeEdu no arquivo <code>UserServicesImpl.java</code> nas requisições HTTP.</li>
+    <li>Execute o projeto:
+        <pre><code>mvn spring-boot:run</code></pre>
+    </li>
+</ol>
 
-### Instruções
+<h2>Exemplo de Requisição</h2>
 
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/seu-usuario/GupyLizeIntegration.git
-   ```cd GupyLizeIntegration
-   ```mvn install
-   ``mvn spring-boot:run
+<h3>Criar ou Encontrar Usuário</h3>
 
+<p>O endpoint <code>encontrarOuCriarUsuario</code> cria ou encontra um usuário na plataforma LizeEdu. Exemplo de requisição:</p>
+
+<pre><code>POST /api/v2/students/
+Content-Type: application/json
+Authorization: Token SEU TOKEN LIZE AQUI
+
+{
+    "email": "email@exemplo.com",
+    "test_id": "12345",
+    "name": "Nome do Candidato"
+}</code></pre>
+
+<p>Resposta de sucesso:</p>
+
+<pre><code>HTTP/1.1 201 Created
+Location: https://app.lizeedu.com.br/conta/sso?access_token=seu_token</code></pre>
+
+<h2>Como Contribuir</h2>
+
+<p>Contribuições são bem-vindas! Para contribuir com o projeto:</p>
+
+<ol>
+    <li>Faça um fork do repositório.</li>
+    <li>Criar uma branch com suas alterações:
+        <pre><code>git checkout -b minha-alteracao</code></pre>
+    </li>
+    <li>Faça commit das suas alterações:
+        <pre><code>git commit -am 'Minha alteração'</code></pre>
+    </li>
+    <li>Envie para o seu repositório:
+        <pre><code>git push origin minha-alteracao</code></pre>
+    </li>
+    <li>Abra um pull request.</li>
+</ol>
+
+<h2>Licença</h2>
+
+<p>Este projeto está licenciado sob a MIT License - veja o arquivo <code>LICENSE</code> para mais detalhes.</p>
